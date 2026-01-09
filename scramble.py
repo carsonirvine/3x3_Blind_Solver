@@ -6,9 +6,11 @@ import random
 
 class Scramble:
 
-    def __init__(self, length):
+
+    def __init__(self, length, moves):
         self.length = length
-        self.moves = []
+        self.moves = moves
+        self.scramble = self.generate_scramble()
     
     def generate_scramble(self): # generates and returns a scramble
         scramble_string= ""
@@ -32,3 +34,4 @@ class Scramble:
         else:
             return random.randrange(6,17)
 
+    

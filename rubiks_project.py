@@ -13,6 +13,7 @@ from scramble import Scramble
 piece_locations = [[[[0 for x in range(6)] for i in range(6)] for y in range(6)] for k in range(24)] # creates the 4d array storing each piece location based on its three face colours
 
 
+moves = ["R","R'","R2","L","L'","L2","U","U'","U2","D","D'","D2","F","F'","F2","B","B'","B2"]
 
 '''
 For piece coordinates, starting with green front and white top (x,y,z)
@@ -36,15 +37,12 @@ If it has multiple 1s its a center piece
 
 
 #moves = ["R","L","U","D","F","B","R'","L'","U'","D'","F'","B'","R2","L2","U2","D2","F2","B2"]
-moves = ["R","R'","R2","L","L'","L2","U","U'","U2","D","D'","D2","F","F'","F2","B","B'","B2"]
 
 
 
-scramble = Scramble(20)
-    
 
-
-
+scramble = Scramble(20, moves)
+print(scramble.scramble)
 
 def print_all_pieces():
     for i in range(3):
@@ -53,7 +51,6 @@ def print_all_pieces():
                 print(i,",",j,",",k,": ", cube.get_piece((i,j,k)), "\n")
 
 
-scramble = generate_scramble()
 print(cube)
 print("Finding RB edge: ", cube.find_piece("RB"))
 print("Finding BR edge: ", cube.find_piece("BR"))
