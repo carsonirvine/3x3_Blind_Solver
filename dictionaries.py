@@ -1,4 +1,4 @@
-# dictionary of 3 letter piece colours to blind letter
+# dictionary of 3 letter corner piece colours to blind letter
 corner_piece_to_letter = {
     # O Y B
     "OYB": "H",
@@ -65,7 +65,7 @@ corner_piece_to_letter = {
     "GWR": "J"
 }
 
-# dictionary to find where a piece should be from colours
+# search for original corner position by piece colours
 corner_piece_to_position = {
     # Corner at (0,0,0): OYB
     "OYB": (0,0,0), "OBY": (0,0,0), "YOB": (0,0,0), "YBO": (0,0,0), "BOY": (0,0,0), "BYO": (0,0,0),
@@ -92,7 +92,7 @@ corner_piece_to_position = {
     "RWG": (2,2,2), "RGW": (2,2,2), "WRG": (2,2,2), "WGR": (2,2,2), "GRW": (2,2,2), "GWR": (2,2,2)
 }
 
-
+# dictionary of 2 letter edge piece colours to blind letter
 edge_piece_to_letter = {
     #OY
     "OY": "G",
@@ -143,6 +143,7 @@ edge_piece_to_letter = {
     "WR": "B"
 }
 
+# search for original edge position by piece colours
 edge_piece_to_position = {
     # Edge at (0,0,1): OY
     "OY": (0,0,1), "YO": (0,0,1),
