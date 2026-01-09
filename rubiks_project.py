@@ -3,6 +3,7 @@ from magiccube import BasicSolver
 import random
 from scramble import Scramble
 
+moves = ["R","R'","R2","L","L'","L2","U","U'","U2","D","D'","D2","F","F'","F2","B","B'","B2"]
 
 corner_piece_to_letter = {
     "OYB": "H",
@@ -46,18 +47,12 @@ edge_piece_locations = {
 }
 
 
-moves = ["R","R'","R2","L","L'","L2","U","U'","U2","D","D'","D2","F","F'","F2","B","B'","B2"]
-
 def print_all_pieces():
     for i in range(3):
         for j in range(3):
             for k in range(3):
                 print(i,",",j,",",k,": ", cube.get_piece((i,j,k)), "\n")
 
-'''
-
-
-'''
 
 
 cube = magiccube.Cube(3,"WWWWWWWWWOOOOOOOOOGGGGGGGGGRRRRRRRRRBBBBBBBBBYYYYYYYYY")
