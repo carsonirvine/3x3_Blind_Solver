@@ -1,3 +1,4 @@
+# prints every piece by position
 def print_all_pieces(cube):
     for n in range(3):
         for i in range(3):

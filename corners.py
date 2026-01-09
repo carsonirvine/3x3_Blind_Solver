@@ -34,7 +34,10 @@ def solve_corners(cube):
         # unsolved pieces present
         elif return_letters[-1] in ("A", "R"):
             parity = True
+
+            # TEMPORARY SO THE PROGRAM TERMINATES
             solved = True
+
             print("UNSOLVED PIECE PRESENT")
             break
 

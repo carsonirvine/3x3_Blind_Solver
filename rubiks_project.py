@@ -12,35 +12,15 @@ cube = magiccube.Cube(3,"WWWWWWWWWOOOOOOOOOGGGGGGGGGRRRRRRRRRBBBBBBBBBYYYYYYYYY"
 
 solver = BasicSolver(cube)
 
-
-
-edge_piece_locations = {
-    "OY": "G",
-    "YO": "X"
-}
-
-
-
+printing.print_all_pieces(cube)
 scramble = Scramble(20, moves)
 print(f"Scramble: {scramble.scramble}")
 
 
-#printing.print_all_pieces(cube)
-#print(cube)
-
 cube.rotate(scramble.scramble)
-#print("\nSCRAMBLING\n")
 print(cube)
-#printing.print_all_pieces(cube)
-
-
-
-
 
 
 corner_sequence = corners.solve_corners(cube)
 
 print(f"\n\nCORNER SEQUENCE\n\n {corner_sequence}")
-
-#piece = cube.get_piece((2,2,2))
-#print(piece)

@@ -1,3 +1,4 @@
+# dictionary of 3 letter piece colours to blind letter
 corner_piece_to_letter = {
     # O Y B
     "OYB": "H",
@@ -64,40 +65,7 @@ corner_piece_to_letter = {
     "GWR": "J"
 }
 
-letter_to_corner_pieces = {
-    "H": ["OYB", "OBY"],
-    "X": ["YBO", "YOB"],
-    "S": ["BOY", "BYO"],
-
-    "G": ["OYG", "OGY"],
-    "U": ["YGO", "YOG"],
-    "L": ["GOY", "GYO"],
-
-    "E": ["OWB", "OBW"],
-    "A": ["WBO", "WOB"],
-    "R": ["BOW", "BWO"],
-
-    "F": ["OWG", "OGW"],
-    "D": ["WGO", "WOG"],
-    "I": ["GOW", "GWO"],
-
-    "O": ["RYB", "RBY"],
-    "W": ["YBR", "YRB"],
-    "T": ["BRY", "BYR"],
-
-    "P": ["RYG", "RGY"],
-    "V": ["YGR", "YRG"],
-    "K": ["GRY", "GYR"],
-
-    "N": ["RWB", "RBW"],
-    "B": ["WBR", "WRB"],
-    "Q": ["BRW", "BWR"],
-
-    "M": ["RWG", "RGW"],
-    "C": ["WGR", "WRG"],
-    "J": ["GRW", "GWR"]
-}
-
+# dictionary to find where a piece should be from colours
 corner_piece_to_position = {
     # Corner at (0,0,0): OYB
     "OYB": (0,0,0), "OBY": (0,0,0), "YOB": (0,0,0), "YBO": (0,0,0), "BOY": (0,0,0), "BYO": (0,0,0),
@@ -124,6 +92,91 @@ corner_piece_to_position = {
     "RWG": (2,2,2), "RGW": (2,2,2), "WRG": (2,2,2), "WGR": (2,2,2), "GRW": (2,2,2), "GWR": (2,2,2)
 }
 
-corner_position_to_desired_piece = {}
-for k, v in corner_piece_to_position.items():
-    corner_position_to_desired_piece.setdefault(v, []).append(k)
+
+edge_piece_to_letter = {
+    #OY
+    "OY": "G",
+    "YO": "X",
+
+    #OB
+    "OB": "H",
+    "BO": "R",
+
+    # OG
+    "OG": "F",
+    "GO": "L",
+
+    # OW
+    "OW": "E",
+    "WO": "D",
+
+    # YB
+    "YB": "W",
+    "BY": "S",
+
+    # YG
+    "YG": "U",
+    "GY": "K",
+
+    # WB
+    "WB": "Q",
+    "BW": "A",
+
+    # WG
+    "WG": "C",
+    "GW": "I",
+
+    # RY
+    "RY": "O",
+    "YR": "V",
+
+    # RB
+    "RB": "N",
+    "BR": "T",
+
+    # RG
+    "RG": "P",
+    "GR": "J",
+
+    # RW
+    "RW": "M",
+    "WR": "B"
+}
+
+edge_piece_to_position = {
+    # Edge at (0,0,1): OY
+    "OY": (0,0,1), "YO": (0,0,1),
+
+    # Edge at (0,1,0): OB
+    "OB": (0,1,0), "BO": (0,1,0),
+
+    # Edge at (0,1,2): OG
+    "OG": (0,1,2), "GO": (0,1,2),
+
+    # Edge at (0,2,1): OW
+    "OW": (0,2,1), "WO": (0,2,1),
+
+    # Edge at (1,0,0): YB
+    "YB": (1,0,0), "BY": (1,0,0),
+
+    # Edge at (1,0,2): YG
+    "YG": (1,0,2), "GY": (1,0,2),
+
+    # Edge at (1,2,0): WB
+    "WB": (1,2,0), "BW": (1,2,0),
+
+    # Edge at (1,2,2): WG
+    "WG": (1,2,2), "GW": (1,2,2),
+
+    # Edge at (2,0,1): RY
+    "RY": (2,0,1), "YR": (2,0,1),
+
+    # Edge at (2,1,0): RB
+    "RB": (2,1,0), "BR": (2,1,0),
+
+    # Edge at (2,1,2): RG
+    "RG": (2,1,2), "GR": (2,1,2),
+
+    # Edge at (2,2,1): RW
+    "RW": (2,2,1), "WR": (2,2,1)
+}

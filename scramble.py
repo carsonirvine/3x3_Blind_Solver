@@ -1,6 +1,9 @@
 import magiccube
 import random
 
+# Scramble class that takes a length and move list
+# and generates a scramble
+# CURRENTLY HARDCODED FOR 3x3 MOVES ONLY
 class Scramble:
 
 
