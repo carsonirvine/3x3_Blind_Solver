@@ -7,6 +7,7 @@ cube = magiccube.Cube(3,"WWWWWWWWWOOOOOOOOOGGGGGGGGGRRRRRBRRRBBBRBBBBBYYYYYYYYY"
 from magiccube import BasicSolver
 solver = BasicSolver(cube)
 import random
+from scramble import Scramble
 
 
 piece_locations = [[[[0 for x in range(6)] for i in range(6)] for y in range(6)] for k in range(24)] # creates the 4d array storing each piece location based on its three face colours
@@ -39,27 +40,7 @@ moves = ["R","R'","R2","L","L'","L2","U","U'","U2","D","D'","D2","F","F'","F2","
 
 
 
-def generate_scramble(): # generates and returns a scramble
-    scramble_string= ""
-    move_num = random.randrange(0,17)
-    scramble_string = scramble_string + " " + moves[move_num]
-    for x in range(19):
-        next_move = pick_move_num(move_num)
-        scramble_string = scramble_string + " " + moves[next_move]
-        move_num = next_move
-    return scramble_string
-
-def pick_move_num(previous_move): # based on last move chooses next move. Cant have two parallel moves in a row
-    if previous_move > 11:
-        return random.randrange(0,11)
-    elif previous_move > 5:
-        temp_random = random.randrange(0,1)
-        if temp_random == 1:
-            return random.randrange(12, 17)
-        else:
-            return random.randrange(0,5)
-    else:
-        return random.randrange(6,17)
+scramble = Scramble(20)
     
 
 
