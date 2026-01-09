@@ -1,11 +1,8 @@
 import sys
-sys.path.append("C:/Users/Carson/AppData/Local/Packages/PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0/LocalCache/local-packages/Python313/site-packages/")
+#sys.path.append("C:/Users/Carson/AppData/Local/Packages/PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0/LocalCache/local-packages/Python313/site-packages/")
 
 import magiccube
-#cube = magiccube.Cube(3,"YYYYYYYYYRRRRRRRRRGGGGGGGGGOOOOOOOOOBBBBBBBBBWWWWWWWWW")
-cube = magiccube.Cube(3,"WWWWWWWWWOOOOOOOOOGGGGGGGGGRRRRRBRRRBBBRBBBBBYYYYYYYYY")
 from magiccube import BasicSolver
-solver = BasicSolver(cube)
 import random
 from scramble import Scramble
 
@@ -14,6 +11,12 @@ piece_locations = [[[[0 for x in range(6)] for i in range(6)] for y in range(6)]
 
 
 moves = ["R","R'","R2","L","L'","L2","U","U'","U2","D","D'","D2","F","F'","F2","B","B'","B2"]
+
+def print_all_pieces():
+    for i in range(3):
+        for j in range(3):
+            for k in range(3):
+                print(i,",",j,",",k,": ", cube.get_piece((i,j,k)), "\n")
 
 '''
 For piece coordinates, starting with green front and white top (x,y,z)
@@ -36,26 +39,21 @@ If it has multiple 1s its a center piece
 '''
 
 
-#moves = ["R","L","U","D","F","B","R'","L'","U'","D'","F'","B'","R2","L2","U2","D2","F2","B2"]
+cube = magiccube.Cube(3,"WWWWWWWWWOOOOOOOOOGGGGGGGGGRRRRRBRRRBBBRBBBBBYYYYYYYYY")
 
-
-
+solver = BasicSolver(cube)
 
 scramble = Scramble(20, moves)
 print(scramble.scramble)
 
-def print_all_pieces():
-    for i in range(3):
-        for j in range(3):
-            for k in range(3):
-                print(i,",",j,",",k,": ", cube.get_piece((i,j,k)), "\n")
+
+
 
 
 print(cube)
 print("Finding RB edge: ", cube.find_piece("RB"))
 print("Finding BR edge: ", cube.find_piece("BR"))
 print("piece 2,1,0: ", cube.get_piece((2,1,0)))
-cube = magiccube.Cube(3,"WWWWWWWWWOOOOOOOOOGGGGGGGGGRRRRRRRRRBBBBBBBBBYYYYYYYYY")
 print(cube)
 #print(scramble)
 #cube.rotate(scramble)
