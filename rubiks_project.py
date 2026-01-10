@@ -18,8 +18,8 @@ scramble = Scramble(20, moves)
 print(f"Scramble: {scramble.scramble}")
 
 
-#cube.rotate(scramble.scramble)
-cube.rotate("D' L' U' R F2 D' L' F' R U2 R U2 R' B U2 R' U2 R' U' L")
+cube.rotate(scramble.scramble)
+#cube.rotate("D' L' U' R F2 D' L' F' R U2 R U2 R' B U2 R' U2 R' U' L")
 print(cube)
 
 

@@ -8,6 +8,7 @@ def solve_corners(cube):
     visited_positions = {}
     solved = False
     corner_turned = False
+    something_done = False
     # initialize position, piece, and significant side
     starting_position = (0,2,0)
     current_position = starting_position
@@ -23,51 +24,55 @@ def solve_corners(cube):
             #raise RuntimeError("current_position is in visited positions line 21")
         visit(visited_positions, current_position)
         # check if done or unsolved pieces present
+        # if current piece is A or R then corner is twisted
         if convert_piece_to_letter(current_piece, significant_pos) in ("A", "R"):
             del return_letters[-1]
             unsolved_piece = find_unsolved_piece(cube, visited_positions)
             if unsolved_piece is None:
+                print("Letter in A R")
                 solved = True
                 break
             else: 
                 current_position = unsolved_piece
                 significant_pos = find_significant_pos(current_piece, "horizontal")
-        elif return_letters[-1] == "E":
-            del return_letters[-1]
-            # delete last 'E' letter
-            unsolved_piece = find_unsolved_piece(cube, visited_positions)
-            if unsolved_piece is None:
-                solved = True
-                break
-            else: 
-                current_position = unsolved_piece
-                significant_pos = find_significant_pos(current_piece, "horizontal")
-        elif return_letters[-1] in ("R", "A"):
-            del return_letters[-1]
-            corner_turned = True
-            unsolved_piece = find_unsolved_piece(cube, visited_positions)
-            if unsolved_piece is None:
-                solved = True
-                break
-                raise RuntimeError("Unsolved piece is None on line 31")
-            else:
-                current_position = unsolved_piece
-                significant_pos = find_significant_pos(current_piece, "horizontal")
-            solved = False
+                something_done = True
+        # If last letter is E then check if theres unsolved pieces
+        elif convert_piece_to_letter(current_piece, significant_pos) == "E":
+            try:
+                del return_letters[-1]
+                # delete last 'E' letter
+                unsolved_piece = find_unsolved_piece(cube, visited_positions)
+                if unsolved_piece is None:
+                    solved = True
+                    print("Return letter in E")
+                    break
+                else: 
+                    current_position = unsolved_piece
+                    significant_pos = find_significant_pos(current_piece, "horizontal")
+                    something_done = True
+            except:
+                raise RuntimeError("return_letters[-1] == \"E\" out of range line 38")
         # get next piece location, piece, and significant side data
-        elif visited_positions[current_position] == 2:
-            unsolved_piece = find_unsolved_piece(cube, visited_positions)
-            if unsolved_piece is None:
-                solved = True
-                break
-                raise RuntimeError("Unsolved piece is None on line 45")
-            else:
-                current_position = unsolved_piece
-                significant_pos = find_significant_pos(current_piece, "horizontal")
-            solved = False
-        else:
+        try:
+            if visited_positions[current_position] == 2 and current_position != starting_position:
+                unsolved_piece = find_unsolved_piece(cube, visited_positions)
+                if unsolved_piece is None:
+                    solved = True
+                    print("VISITED POSITIONS OVER 2")
+                    break
+                    raise RuntimeError("Unsolved piece is None on line 45")
+                else:
+                    current_position = unsolved_piece
+                    significant_pos = find_significant_pos(current_piece, "horizontal")
+                    something_done = True
+                solved = False
+        except:
+            #raise RuntimeError("visited_positions[current_position] == 2 key error")
+            print("visited_positions[current_position] == 2 key error")
+        if not something_done:
             current_position = find_next_position(current_piece)
             significant_pos = find_significant_pos(current_piece, significant_pos)
+        something_done = False
 
         
     return return_letters
@@ -151,4 +156,8 @@ def find_unsolved_piece(cube, visited_positions):
             #unsolved_piece_found = True
             unsolved_piece_position = current_position
             return unsolved_piece_position
+        elif str(current_piece)[0] not in ("R", "O") or str(current_piece)[1] not in ("Y", "W") or str(current_piece)[2] not in ("B", "G"):
+            unsolved_piece_position = current_position
+            return unsolved_piece_position
+
     return None    
