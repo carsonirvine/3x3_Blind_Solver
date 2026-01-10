@@ -3,81 +3,82 @@ import dictionaries as dict
 
 # Finds the corner sequence
 def solve_corners(cube):
-    solved = False
-    #unsolved_pieces_present = False
-    # initialize position, piece, and significant side
-    starting_x = 0
-    starting_y = 2
-    starting_z = 0
-    current_position = (starting_x, starting_y, starting_z)
-    current_piece = cube.get_piece(current_position)
-    significant_pos = "horizontal"
     # list of answer letters
     return_letters = []
-    visited_positions = set()
-    return_letters.append(convert_piece_to_letter(current_piece, significant_pos))
-    visited_positions.add(current_position)
+    visited_positions = {}
+    solved = False
+    corner_turned = False
+    # initialize position, piece, and significant side
+    starting_position = (0,2,0)
+    current_position = starting_position
+    significant_pos = "horizontal"
 
-    seen_states = set()
 
     # while not solved keep looking
     while not solved:
-        
-        # get next piece location, piece, and significant side data
-        current_position = find_next_position(current_piece)
-        significant_pos = find_significant_pos(current_piece, significant_pos)
         current_piece = cube.get_piece(current_position)
-        print(f"Current piece line 30: {current_piece}")
-        current_letter = convert_piece_to_letter(current_piece, significant_pos)
-        return_letters.append(current_letter)
-
-        if current_position in visited_positions:
-            del return_letters[-1]
-            unsolved_piece_position = find_unsolved_piece(cube, visited_positions)
-            if unsolved_piece_position is None:
-                buffer_piece = cube.get_piece((starting_x, starting_y, starting_z))
-                if str(buffer_piece) == "OYB":
-                    solved = True
-                    break
-                else:
-                    print("FLIP PRESENT SOMEWHERE")
-                    break
-            current_piece = cube.get_piece(unsolved_piece_position)
-            print(f"Current piece line 43: {current_piece}")
-            significant_pos = "horizontal"
-            current_position = unsolved_piece_position
-
-        visited_positions.add(current_position)
-
-        state = (current_position, significant_pos, str(current_piece))
-        if state in seen_states:
-            raise RuntimeError(f"Infinite loop detected, current string {return_letters}")
-        seen_states.add(state)
+        return_letters.append(convert_piece_to_letter(current_piece, significant_pos))
+        print(f"\nPOSITION: {current_position}, LETTERS: {return_letters}")
+        #if current_position in visited_positions:
+            #raise RuntimeError("current_position is in visited positions line 21")
+        visit(visited_positions, current_position)
         # check if done or unsolved pieces present
-        if return_letters[-1] == "E":
-            solved = True
-            # delete last 'E' letter
+        if convert_piece_to_letter(current_piece, significant_pos) in ("A", "R"):
             del return_letters[-1]
-            break
-
-        # unsolved pieces present
-        
-        elif return_letters[-1] in ("A", "R"):
-            #unsolved_pieces_present = True
-            unsolved_piece_position = find_unsolved_piece(cube, visited_positions)
-            if unsolved_piece_position is not None:
-                current_piece = cube.get_piece(unsolved_piece_position)
-                print(f"Current piece line 67: {current_piece}")
-                significant_pos = "horizontal"
-                current_position = unsolved_piece_position
-                return_letters.append(convert_piece_to_letter(current_piece, significant_pos))
-                visited_positions.add(current_position)
-                continue
-            else:
+            unsolved_piece = find_unsolved_piece(cube, visited_positions)
+            if unsolved_piece is None:
                 solved = True
-                print("No unsolved piece location found")
                 break
+            else: 
+                current_position = unsolved_piece
+                significant_pos = find_significant_pos(current_piece, "horizontal")
+        elif return_letters[-1] == "E":
+            del return_letters[-1]
+            # delete last 'E' letter
+            unsolved_piece = find_unsolved_piece(cube, visited_positions)
+            if unsolved_piece is None:
+                solved = True
+                break
+            else: 
+                current_position = unsolved_piece
+                significant_pos = find_significant_pos(current_piece, "horizontal")
+        elif return_letters[-1] in ("R", "A"):
+            del return_letters[-1]
+            corner_turned = True
+            unsolved_piece = find_unsolved_piece(cube, visited_positions)
+            if unsolved_piece is None:
+                solved = True
+                break
+                raise RuntimeError("Unsolved piece is None on line 31")
+            else:
+                current_position = unsolved_piece
+                significant_pos = find_significant_pos(current_piece, "horizontal")
+            solved = False
+        # get next piece location, piece, and significant side data
+        elif visited_positions[current_position] == 2:
+            unsolved_piece = find_unsolved_piece(cube, visited_positions)
+            if unsolved_piece is None:
+                solved = True
+                break
+                raise RuntimeError("Unsolved piece is None on line 45")
+            else:
+                current_position = unsolved_piece
+                significant_pos = find_significant_pos(current_piece, "horizontal")
+            solved = False
+        else:
+            current_position = find_next_position(current_piece)
+            significant_pos = find_significant_pos(current_piece, significant_pos)
+
+        
     return return_letters
+
+
+def visit(visited, position):
+    if position in visited:
+        visited[position] += 1
+    else:
+        visited[position] = 1
+
 
 # significant_pos can be "vertical" for top and bottom, "horizontal" for left and right
 # and "through" for front and back
