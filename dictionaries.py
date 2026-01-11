@@ -119,8 +119,8 @@ edge_piece_to_letter = {
     "GY": "K",
 
     # WB
-    "WB": "Q",
-    "BW": "A",
+    "WB": "A",
+    "BW": "Q",
 
     # WG
     "WG": "C",
