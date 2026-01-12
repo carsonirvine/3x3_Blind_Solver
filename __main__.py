@@ -1,0 +1,17 @@
+from blind_solver import Blind_Solver
+import sys
+
+def main():
+    if len(sys.argv) != 2:
+        print(f"ERROR: expected 1 argument, got {len(sys.argv) - 1}")
+        sys.exit(1)
+
+    mode = sys.argv[1]
+
+    solver = Blind_Solver(mode)
+    solver.solve()
+
+        
+
+if __name__ == '__main__':
+	main()

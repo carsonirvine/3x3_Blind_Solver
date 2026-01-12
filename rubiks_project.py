@@ -57,3 +57,6 @@ if str(cube) == str(solved_cube):
     print("\n SUCCESS")
 else:
     print("\nUNSUCCESSFUL")
+
+
+
