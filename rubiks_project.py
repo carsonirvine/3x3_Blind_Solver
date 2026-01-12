@@ -20,9 +20,31 @@ print(cube)
 edge_sequence = edges.solve_edges(cube)
 # calculate the corner sequence
 corner_sequence = corners.solve_corners(cube)
+# Is the parity algorithm required
+parity = False
 
 # output results
 print(f"EDGE SEQUENCE:\n {edge_sequence}")
 if len(edge_sequence) % 2 != 0:
+    parity = True
     print("\nPARITY Ra PERM REQUIRED")
 print(f"\nCORNER SEQUENCE:\n {corner_sequence}")
+
+# Solves the edges
+#for edge in edge_sequence:
+#    cube.rotate(dict.edge_setup_moves[edge])
+#    cube.rotate(dict.algorithms["edge_swap"])
+#    cube.rotate(dict.edge_unsetup_moves[edge])
+
+# if the parity algorithm is required
+#if parity:
+#    cube.rotate(dict.algorithms["parity"])
+
+# Solves the corners
+for corner in corner_sequence:
+    cube.rotate(dict.corner_setup_moves[corner])
+    cube.rotate(dict.algorithms["corner_swap"])
+    cube.rotate(dict.corner_unsetup_moves[corner])
+
+# Print the cube
+print(cube)

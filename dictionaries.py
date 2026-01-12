@@ -199,6 +199,58 @@ edge_starting_position = (2,2,1)
 # Corner starting position
 corner_starting_position = (0,2,0)
 
+# All setup moves for edge pieces
+edge_setup_moves = {
+    "A": "Lw2 D' Lw2",
+    "C": "Lw2 D Lw2",
+    "D": "",
+    "E": "L Dw' L",
+    "F": "Dw' L",
+    "G": "L' Dw' L",
+    "H": "Dw L'",
+    "I": "Lw D' L2",
+    "J": "Dw2 L",
+    "K": "Lw D L2",
+    "L": "L'",
+    "N": "Dw L",
+    "O": "D' Lw D L2",
+    "P": "Dw' L'",
+    "Q": "D2 D L2",
+    "R": "L",
+    "S": "Lw' D' L2",
+    "T": "Dw2 L'",
+    "U": "D' L2",
+    "V": "D2 L2",
+    "W": "D L2",
+    "X": "L2"
+}
+
+# Return moves for all edge piece setups
+edge_unsetup_moves = {
+    "A": "Lw2 D Lw2",
+    "C": "Lw2 D' Lw2",
+    "D": "",
+    "E": "L' Dw L'",
+    "F": "L' Dw",
+    "G": "L Dw L'",
+    "H": "L Dw'",
+    "I": "L2 D Lw'",
+    "J": "L' Dw2",
+    "K": "L2 D' Lw'",
+    "L": "L",
+    "N": "L' Dw'",
+    "O": "D' L2 D' Lw'",
+    "P": "L Dw",
+    "Q": "L2 D' D2",
+    "R": "L'",
+    "S": "L2 D Lw",
+    "T": "L Dw2",
+    "U": "L2 D",
+    "V": "L2 D2",
+    "W": "L2 D'",
+    "X": "L2"
+}
+
 # all setup moves for corner pieces
 corner_setup_moves = {
     "B": "R2",
@@ -221,6 +273,31 @@ corner_setup_moves = {
     "U": "D",
     "V": "",
     "W": "D'",
+    "X": "D2"
+}
+
+# Return moves for all corner piece setups
+corner_unsetup_moves = {
+    "B": "R2",
+    "C":"D' F2",
+    "D": "F2",
+    "F": "D' F",
+    "G": "F",
+    "H": "R' D",
+    "I": "R F'",
+    "J": "R",
+    "K": "R F",
+    "L": "R F2",
+    "M": "F'",
+    "N": "F' R",
+    "O": "F' R2",
+    "P": "F' R'",
+    "Q": "D R'",
+    "S": "F D'",
+    "T": "R'",
+    "U": "D'",
+    "V": "",
+    "W": "D",
     "X": "D2"
 }
 
