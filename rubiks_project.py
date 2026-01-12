@@ -29,6 +29,7 @@ parity = False
 
 # output results
 print(f"EDGE SEQUENCE:\n {edge_sequence}")
+# if odd number of edge and corner moves the parity algorithm is required
 if len(edge_sequence) % 2 != 0:
     parity = True
     print("\nPARITY Ra PERM REQUIRED")

@@ -2,74 +2,92 @@ import dictionaries as dict
 
 # Finds the corner sequence
 def solve_edges(cube):
+    # is cube solved
     solved = False
-    something_done = False
+    # Was an unsolved piece found
+    unsolved_piece_found = False
+    # sequence of edge letters
     return_letters = []
+    # dictionary of visited positions as keys and number of visits as values
     visited_positions = {}
-    # initialize position, piece, and significant side
-    
+
+    # Start at the starting position
     current_position = dict.edge_starting_position
+    # first significant side is top
     significant_pos = "vertical"
 
     
 
     # while not solved keep looking
     while not solved:
-        # get  piece and add to list
+        # get piece from current position
         current_piece = cube.get_piece(current_position)
-        #print(f"COONVERTING TO LETTER: Piece: {current_piece}, sig_pos: {significant_pos}, current position: {current_position}, letter: {convert_piece_to_letter(current_piece, significant_pos, current_position)}")
+        # add piece converted to letter
         return_letters.append(convert_piece_to_letter(current_piece, significant_pos, current_position))
         # Visit position after appending letter
         visit(visited_positions, current_position)
 
+        # If letter was M then buffer piece is in spot flipped
         if convert_piece_to_letter(current_piece, significant_pos, current_position) == "M":
-            # delete last 'E' letter
+            # delete last 'M' letter
             del return_letters[-1]
+            # find an unsolved piece
             unsolved_pos = find_unsolved_piece(cube, visited_positions)
+            # temporary position for finding next significant pos after getting unsolved position
             temp_sig_pos = "horizontal"
-            
+            # if none returned corners must be solved
             if unsolved_pos is None:
                 solved = True
                 break
+            # else get unsolved position and find its significant side
             else: 
                 current_position = unsolved_pos
                 significant_pos = find_significant_pos(current_piece, temp_sig_pos, current_position)
-                something_done = True
+                unsolved_piece_found = True
+        # If letter is B, correct for buffer to be right
         elif convert_piece_to_letter(current_piece, significant_pos, current_position) == "B":
             # delete last 'E' letter
             del return_letters[-1]
+            # search for an unsolved piece
             unsolved_pos = find_unsolved_piece(cube, visited_positions)
             temp_sig_pos = "horizontal"
+            # if no unsolved piece edges are done
             if unsolved_pos is None:
                 solved = True
-                
                 break
+            # else get unsolved position and find its significant side
             else: 
                 current_position = unsolved_pos
                 significant_pos = find_significant_pos(current_piece, "horizontal", current_position)
-                something_done = True
-        
+                unsolved_piece_found = True
+        # Try, because might search key not in dict. if so means unvisited position so just pass
         try:
-            if visited_positions[current_position] == 2 and current_position != dict.edge_starting_position and not something_done:
+            # check if position has been visited twice and also not starting position, and no unsolved piece already found
+            if visited_positions[current_position] == 2 and current_position != dict.edge_starting_position and not unsolved_piece_found:
+                # search for an unsolved piece
                 unsolved_pos = find_unsolved_piece(cube, visited_positions)
                 temp_sig_pos = "horizontal"
+                # if no unsolved piece edges are done
                 if unsolved_pos is None:
                     solved = True
                     break
+                # else get unsolved position and find its significant side
                 else:
                     current_position = unsolved_pos
                     significant_pos = find_significant_pos(current_piece, "horizontal", current_position)
-                    something_done = True
+                    unsolved_piece_found = True
+                # If here then cube must be unsolved
                 solved = False
         except:
+            # Pass, as only error could be searching for unvisited position
             pass
-        if not something_done:
-            
-            #print(f"Sig pos: {significant_pos}, piece: {current_piece}, pos: {current_position}")
+        # if we havent found an unsolved piece to go to simply go to next in chain
+        if not unsolved_piece_found:
             significant_pos = find_significant_pos(current_piece, significant_pos, current_position)
             current_position = find_next_position(current_piece)
-            #print(f"Sig pos: {significant_pos}")
-        something_done = False
+        # reset whether we have found an unsolved piece
+        unsolved_piece_found = False
+    # after loop return sequence
     return return_letters
 
 # visit the provided position in the visited dictionary

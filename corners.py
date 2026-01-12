@@ -4,67 +4,85 @@ import dictionaries as dict
 def solve_corners(cube):
     # list of answer letters
     return_letters = []
+    # dict of visited positions with value = number of visits
     visited_positions = {}
+    # Is cube solved
     solved = False
-    something_done = False
-    # initialize position, piece, and significant side
+    # Was an unsolved piece found
+    unsolved_piece_found = False
+
+    # Start from starting position
     current_position = dict.corner_starting_position
+    # First starting side is left
     significant_pos = "horizontal"
 
 
     # while not solved keep looking
-    #while not solved:
     while not solved:
+        # get piece from current position
         current_piece = cube.get_piece(current_position)
+        # add piece converted to letter
         return_letters.append(convert_piece_to_letter(current_piece, significant_pos))
+        # Visit position after appending letter
         visit(visited_positions, current_position)
         
-        # if current piece is A or R then corner is twisted
+        # If letter was A or R then buffer piece is in spot flipped
         if convert_piece_to_letter(current_piece, significant_pos) in ("A", "R"):
+            # delete the A or R
             del return_letters[-1]
-            unsolved_piece = find_unsolved_piece(cube, visited_positions)
-            if unsolved_piece is None:
+            # find an unsolved piece
+            unsolved_pos = find_unsolved_piece(cube, visited_positions)
+            # if none returned corners must be solved
+            if unsolved_pos is None:
                 solved = True
                 break
+            # else take unsolved position and start from horizontal side
             else: 
-                current_position = unsolved_piece
+                current_position = unsolved_pos
                 significant_pos = find_significant_pos(current_piece, "horizontal")
-                something_done = True
-        # If last letter is E then check if theres unsolved pieces
+                unsolved_piece_found = True
+        # If letter is E, correct for buffer to be right
         elif convert_piece_to_letter(current_piece, significant_pos) == "E":
             # delete last 'E' letter
             del return_letters[-1]
-            unsolved_piece = find_unsolved_piece(cube, visited_positions)
-            if unsolved_piece is None:
+            # search for an unsolved piece
+            unsolved_pos = find_unsolved_piece(cube, visited_positions)
+            # if no unsolved piece edges are done
+            if unsolved_pos is None:
                 solved = True
                 break
+            # else get unsolved position and find its significant side
             else: 
-                current_position = unsolved_piece
+                current_position = unsolved_pos
                 significant_pos = find_significant_pos(current_piece, "horizontal")
-                something_done = True
-        # get next piece location, piece, and significant side data
+                unsolved_piece_found = True
+        # Try, because might search key not in dict. if so means unvisited position so just pass
         try:
+            # check if position has been visited twice and also not starting position, and no unsolved piece already found
             if visited_positions[current_position] == 2 and current_position != dict.corner_starting_position:
-                unsolved_piece = find_unsolved_piece(cube, visited_positions)
-                #print(f"Visited positions is 2, unsolved piece is {unsolved_piece}")
-                if unsolved_piece is None:
-                    #print("Visited positions is 2 and unsolved piece is none")
+                # search for an unsolved piece
+                unsolved_pos = find_unsolved_piece(cube, visited_positions)
+                # if no unsolved piece edges are done
+                if unsolved_pos is None:
                     solved = True
                     break
+                # else get unsolved position and find its significant side
                 else:
-                    current_position = unsolved_piece
+                    current_position = unsolved_pos
                     significant_pos = find_significant_pos(current_piece, "horizontal")
-                    something_done = True
+                    unsolved_piece_found = True
+                # If here then cube must be unsolved
                 solved = False
         except:
+            # Pass, as only error could be searching for unvisited position
             pass
-        if not something_done:
+        # if we havent found an unsolved piece to go to simply go to next in chain
+        if not unsolved_piece_found:
             current_position = find_next_position(current_piece)
             significant_pos = find_significant_pos(current_piece, significant_pos)
-            
-        something_done = False
-
-        
+        # reset whether we have found an unsolved piece
+        unsolved_piece_found = False
+    # after loop return sequence
     return return_letters
 
 # visit the provided position in the visited dictionary
@@ -87,16 +105,19 @@ def convert_piece_to_letter(piece, significant_pos):
 
     piece_colors = ""
 
+    # create correct colour order for dictionary
     if significant_pos == "vertical":
         piece_colors+=y_color
         piece_colors+=x_color
         piece_colors+=z_color
         
+    # create correct colour order for dictionary
     elif significant_pos == "horizontal":
         piece_colors+=x_color
         piece_colors+=y_color
         piece_colors+=z_color
     
+    # create correct colour order for dictionary
     elif significant_pos == "through":
         piece_colors+=z_color
         piece_colors+=x_color
