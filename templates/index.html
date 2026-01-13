@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Blind Solver</title>
+</head>
+
+<body>
+
+<label for="states">Choose whether you want the edges, corners, or whole cube to be solved:</label>
+<select name="states" id="states">
+  <option value="edges">Edges</option>
+  <option value="corners">Corners</option>
+  <option value="both">Both</option>
+</select>
+<br><br>
+
+<!-- Button is outside a form to prevent page reload -->
+<button type="button" onclick="solve()">Solve</button>
+
+<hr>
+
+<!-- This is where the output will appear -->
+<pre id="output"></pre>
+
+<script>
+function solve() {
+    const mode = document.getElementById("states").value;
+    const outputElement = document.getElementById("output"); // THIS LINE WAS MISSING
+
+    // Clear previous output
+    outputElement.innerText = "Solving...";
+
+    fetch("/solve", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ mode: mode })
+    })
+    .then(res => res.json())
+    .then(data => {
+        // Update the page literally
+        outputElement.innerText = data.result; 
+    })
+    .catch(err => {
+        outputElement.innerText = "Error: " + err;
+    });
+}
+</script>
+</body>
+</html>

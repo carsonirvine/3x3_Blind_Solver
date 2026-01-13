@@ -6,6 +6,7 @@ import edges
 class Blind_Solver():
     def __init__(self, mode):
         self.mode = mode
+        self.output = ""
     
     def solve(self):
         cube = magiccube.Cube(3,"WWWWWWWWWOOOOOOOOOGGGGGGGGGRRRRRRRRRBBBBBBBBBYYYYYYYYY")
@@ -13,11 +14,11 @@ class Blind_Solver():
         # generate a scramble object from the move alphabet and  normal length
         scramble = Scramble(20, dict.moves)
         # print the scramble
-        print(f"Scramble: {scramble.scramble}")
+        self.output += (f"Scramble: {scramble.scramble}")
         # scramble the cube
         cube.rotate(scramble.scramble)
         # print the current state of the cube for reference
-        print(cube)
+        self.output += '\n\n'+(str(cube))
 
         # calculate the edge sequence
         edge_sequence = edges.solve_edges(cube)
@@ -28,13 +29,13 @@ class Blind_Solver():
 
         # output results
         if self.mode == "edges" or self.mode == "both":
-            print(f"EDGE SEQUENCE:\n {edge_sequence}")
+            self.output += '\n'+(f"EDGE SEQUENCE:\n {edge_sequence}")
             # if odd number of edge and corner moves the parity algorithm is required
             if len(edge_sequence) % 2 != 0:
                 parity = True
-                print("\nPARITY Ra PERM REQUIRED")
+                self.output += '\n'+("\nPARITY Ra PERM REQUIRED")
         if self.mode == "corners" or self.mode == "both":
-            print(f"\nCORNER SEQUENCE:\n {corner_sequence}")
+            self.output += '\n'+(f"\nCORNER SEQUENCE:\n {corner_sequence}")
 
         # Solves the edges
         if self.mode == "edges" or self.mode == "both":
@@ -54,3 +55,5 @@ class Blind_Solver():
                 cube.rotate(dict.corner_setup_moves[corner])
                 cube.rotate(dict.algorithms["corner_swap"])
                 cube.rotate(dict.corner_unsetup_moves[corner])
+        
+        return self.output
