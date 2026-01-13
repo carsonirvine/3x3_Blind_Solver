@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify
-from blind_solver import Blind_Solver
+from Solvers.blind_solver import Blind_Solver
 
 app = Flask(__name__)
 

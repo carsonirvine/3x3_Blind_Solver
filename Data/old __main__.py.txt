@@ -1,4 +1,4 @@
-from blind_solver import Blind_Solver
+from Solvers.blind_solver import Blind_Solver
 import sys
 
 def main():
