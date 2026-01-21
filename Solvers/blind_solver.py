@@ -32,10 +32,16 @@ class Blind_Solver():
             self.output += (f"Inputted Scramble: {self.scramble}")
             # scramble the cube
             cube.rotate(self.scramble)
-
+        
+        
             
         # print the current state of the cube for reference
         self.output += self.cube_to_html(cube)
+
+        kociemba = cube.get_kociemba_facelet_colors()
+        if kociemba[4] != "W" or kociemba[13] != "R":
+            cube_rotations = self.rotate_to_normal(cube)
+            self.output += (f"\n ROTATIONS: {cube_rotations}\n")
         # calculate the edge sequence
         edge_sequence = edges.solve_edges(cube)
         # calculate the corner sequence
@@ -43,10 +49,7 @@ class Blind_Solver():
         # Is the parity algorithm required
         parity = False
 
-        kociemba = cube.get_kociemba_facelet_colors()
-        if kociemba[4] != "W" or kociemba[13] != "R":
-            cube_rotations = self.rotate_to_normal(cube)
-            self.output += (f"\n ROTATIONS: {cube_rotations}\n")
+        
         
         # output results
         if self.mode == "edges" or self.mode == "both":

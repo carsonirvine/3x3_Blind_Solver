@@ -32,8 +32,7 @@ def solve():
         \n2. Wide moves like Lw, Rw', Uw2\
         \n3. Rotations like X, Z', Y2\
         \n(Solution will result in incorrect centers)\
-        \n4. Center moves like M, E', S2\
-        \n(Solution will result in incorrect centers)"
+        \n4. Center moves like M, E', S2"
 
     return jsonify({"result": output})
 
