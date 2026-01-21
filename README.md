@@ -38,3 +38,9 @@ Webpage instructions:
 
 Currently accessible from "https://unproctored-gene-relatedly.ngrok-free.dev/"
 
+
+DO NEXT 
+- IMPLEMENT RECENTERING TO WHITE
+TOP GREEN FRONT IF WIDE/ROTATION MOVES PRESENT
+- ADD INSTRUCTIONS ON HOW THE METHOD WORKS
+- ADD A TIMER FOR PRACTICE
