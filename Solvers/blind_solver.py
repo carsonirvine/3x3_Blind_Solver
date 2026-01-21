@@ -19,8 +19,10 @@ class Blind_Solver():
     
     def solve(self):
         cube = magiccube.Cube(3,"WWWWWWWWWOOOOOOOOOGGGGGGGGGRRRRRRRRRBBBBBBBBBYYYYYYYYY")
+        
         # generate a scramble object from the move alphabet and  normal length
         scramble = Scramble(20, dict.moves)
+
         # print the scramble
         if self.random_scramble:
             self.output += (f"Random Scramble: {scramble.scramble}")
@@ -30,6 +32,7 @@ class Blind_Solver():
             self.output += (f"Inputted Scramble: {self.scramble}")
             # scramble the cube
             cube.rotate(self.scramble)
+
             
         # print the current state of the cube for reference
         self.output += self.cube_to_html(cube)
@@ -40,6 +43,11 @@ class Blind_Solver():
         # Is the parity algorithm required
         parity = False
 
+        kociemba = cube.get_kociemba_facelet_colors()
+        if kociemba[4] != "W" or kociemba[13] != "R":
+            cube_rotations = self.rotate_to_normal(cube)
+            self.output += (f"\n ROTATIONS: {cube_rotations}\n")
+        
         # output results
         if self.mode == "edges" or self.mode == "both":
             self.output += '\n'+(f"EDGE SEQUENCE:\n {edge_sequence}")
@@ -106,3 +114,51 @@ class Blind_Solver():
                     html += '<span style="width:20px; height:20px; display:inline-block;"></span>'
         html += '</div>'
         return html
+    
+    def rotate_to_normal(self, cube):
+        rotations = ""
+        kociemba = cube.get_kociemba_facelet_colors()
+        # FIX WHITE SIDE
+        # TOP
+        if kociemba[4] == "W":
+            pass
+        # RIGHT
+        elif kociemba[13] == "W":
+            rotations += "Z'"
+        # FRONT
+        elif kociemba[22] == "W":
+            rotations += "X"
+        # BOTTOM
+        elif kociemba[31] == "W":
+            rotations += "Z2"
+        # LEFT
+        elif kociemba[40] == "W":
+            rotations += "Z"
+        # BACK
+        elif kociemba[49] == "W":
+            rotations += "X'"
+
+        cube.rotate(rotations)
+        rotations += " "
+
+        # FIX GREEN SIDE
+        # TOP DISREGARD FROM WHITE
+        # RIGHT
+        if kociemba[13] == "G":
+            rotations += "Y"
+            cube.rotate("Y")
+        # FRONT, where it should be
+        elif kociemba[22] == "G":
+            pass
+        # BOTTOM DISREGARD FROM WHITE TOO
+        # LEFT
+        elif kociemba[40] == "G":
+            rotations += "Y'"
+            cube.rotate("Y'")
+        # BACK
+        elif kociemba[49] == "G":
+            rotations += "Y2"
+            cube.rotate("Y2")
+
+        return rotations
+        
